@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 
-blood=[]
+blood=[True,False,True,False]
 q = 1
 f = 0
 v = 0
@@ -112,7 +112,7 @@ class Login(Frame):
             self.ep.configure(relief=RAISED, fg='green', command=self.start1)
 
     def start2(self):
-        self.start(p1, "Anti B")
+        self.start(p2, "Anti B")
         self.start3()
 
 
@@ -137,7 +137,7 @@ class Login(Frame):
             self.ep.configure(relief=RAISED, fg='green', command=self.start2)
 
     def start3(self):
-        self.start(p1, "Anti D")
+        self.start(p3, "Anti D")
         self.start4()
 
 
@@ -161,7 +161,7 @@ class Login(Frame):
             self.ep.configure(relief=RAISED, fg='green', command=self.start3)
 
     def start4(self):
-        self.start(p1, "Control")
+        self.start(p4, "Control")
         self.check()
 
     def imagesel4(self):
@@ -240,11 +240,12 @@ class Login(Frame):
             ss += (y-mean)**2
         ss /= n
         sd = abs(ss)**0.5
-        print(sd)
-        if sd < 20:
+        print(r,"-",sd,"\n")
+        if sd < 550:
             return 1
         else:
             return 0
+
 
     def start(self, p,r):
         global blood
@@ -265,12 +266,13 @@ class Login(Frame):
                 blood[3]=True
 
     def check(self):
+        print(blood)
         if blood[3]==True:
             self.message("Invalid")
         elif blood[0] is False and blood[1] is False and blood[2] is True and blood[3] is False:
-            self.message("O-")
-        elif blood[0] is False and blood[1] is False and blood[2] is False and blood[3] is False:
             self.message("O+")
+        elif blood[0] is False and blood[1] is False and blood[2] is False and blood[3] is False:
+            self.message("O-")
         elif blood[0] is True and blood[1] is False and blood[2] is True and blood[3] is False:
             self.message("A+")
         elif blood[0] is True and blood[1] is False and blood[2] is False and blood[3] is False:
@@ -286,10 +288,10 @@ class Login(Frame):
 
 
     def gp(self):
-        cv2.imshow('Anti-A','p1Anti A.png',0)
-        cv2.imshow('Anti-B','p1Anti B.png', 0)
-        cv2.imshow('Anti-D','p1Anti D.png', 0)
-        cv2.imshow('Control','p1Control.png', 0)
+        cv2.imshow('Anti-A','p1Anti A.png')
+        cv2.imshow('Anti-B','p1Anti B.png')
+        cv2.imshow('Anti-D','p1Anti D.png')
+        cv2.imshow('Control','p1Control.png')
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
